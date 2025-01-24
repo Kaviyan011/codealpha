@@ -1,0 +1,54 @@
+import yfinance as yf
+import pandas as pd
+
+class Portfolio:
+    def _init_(self):
+        self.stocks = {}
+
+    def add_stock(self, ticker, shares):
+        if ticker in self.stocks:
+            self.stocks[ticker] += shares
+        else:
+            self.stocks[ticker] = shares
+        print(f"Added {shares} shares of {ticker}.")
+
+    def remove_stock(self, ticker, shares):
+        if ticker in self.stocks and self.stocks[ticker] >= shares:
+            self.stocks[ticker] -= shares
+            if self.stocks[ticker] == 0:
+                del self.stocks[ticker]
+            print(f"Removed {shares} shares of {ticker}.")
+        else:
+            print("Not enough shares to remove.")
+
+    def get_portfolio_value(self):
+        total_value = 0
+        for ticker, shares in self.stocks.items():
+            stock = yf.Ticker(ticker)
+            try:
+                price = stock.history(period="1d")['Close'][0]
+                total_value += price * shares
+            except IndexError:
+                print(f"Could not retrieve data for {ticker}. Skipping.")
+        return total_value
+
+    def display_portfolio(self):
+        data = []
+        for ticker, shares in self.stocks.items():
+            stock = yf.Ticker(ticker)
+            try:
+                price = stock.history(period="1d")['Close'][0]
+                data.append([ticker, shares, price, price * shares])
+            except IndexError:
+                print(f"Could not retrieve data for {ticker}. Skipping.")
+        df = pd.DataFrame(data, columns=["Ticker", "Shares", "Current Price", "Total Value"])
+        print(df)
+        print(f"\nTotal Portfolio Value: ${self.get_portfolio_value():.2f}")
+
+
+portfolio = Portfolio()
+portfolio.add_stock("AAPL", 10)
+portfolio.add_stock("GOOGL", 15)
+portfolio.display_portfolio()
+portfolio.remove_stock("AAPL", 5)
+portfolio.display_portfolio()
