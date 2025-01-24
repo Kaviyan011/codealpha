@@ -2,13 +2,11 @@ import random
 
 
 
-# List of words to choose from
 
 word_list = ["python", "hangman", "computer", "programming", "developer", "algorithm", "code"]
 
 
 
-# Function to display the current state of the word
 
 def display_word(word, guessed_letters):
 
@@ -16,7 +14,6 @@ def display_word(word, guessed_letters):
 
 
 
-# Function to show the current hangman state based on incorrect guesses
 
 def display_hangman(incorrect_guesses):
 
@@ -152,7 +149,7 @@ def display_hangman(incorrect_guesses):
 
 
 
-# Function to play the Hangman game
+
 
 def play_hangman():
 
@@ -174,7 +171,7 @@ def play_hangman():
 
     while incorrect_guesses < max_incorrect_guesses:
 
-        # Display the current hangman state and the word with guessed letters revealed
+      
 
         display_hangman(incorrect_guesses)
 
@@ -184,13 +181,13 @@ def play_hangman():
 
         
 
-        # Get player's guess
+      
 
         guess = input("Guess a letter: ").lower()
 
         
 
-        # Check if the guess is valid
+       
 
         if len(guess) != 1 or not guess.isalpha():
 
@@ -200,7 +197,7 @@ def play_hangman():
 
         
 
-        # Check if the letter has already been guessed
+      
 
         if guess in guessed_letters:
 
@@ -214,7 +211,7 @@ def play_hangman():
 
         
 
-        # Check if the guess is correct
+        
 
         if guess in word:
 
@@ -242,7 +239,7 @@ def play_hangman():
 
 
 
-# Function to ask if the player wants to play again
+
 
 def ask_to_play_again():
 
@@ -252,7 +249,7 @@ def ask_to_play_again():
 
 
 
-# Run the game
+
 
 if __name__ == "__main__":
 
